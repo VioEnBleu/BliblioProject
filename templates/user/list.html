@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block main_content %}
+<h1>Books Library</h1>
+<div class="grid_container">
+    {% for item in items_list %}
+    <div class="item_card">
+        <h3>{{ item.title_nom }}</h3>
+        <p>Sujet: {{ item.sujet_topic }}</p>
+        {% if item.is_dispo %}
+            <a href="{% url 'reserve_book' item.isbn_id %}">Reserver Now</a>
+        {% else %}
+            <span>Indisponible</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

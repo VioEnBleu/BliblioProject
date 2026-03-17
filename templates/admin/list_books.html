@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<div class="admin-header">
+    <h2>Gestion du Catalogue - Brigitte</h2>
+    <a href="{% url 'add_book' %}" class="btn_action">+ Ajouter un nouveau livre</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Éditeur</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td><strong>{{ book.title }}</strong></td>
+            <td>{{ book.author_id.author }}</td> <td>{{ book.pub_id.name }}</td>      <td>
+                <a href="{% url 'edit_book' book.isbn %}" class="btn-edit">Modifier</a>
+                <a href="{% url 'del_book' book.isbn %}" class="btn-delete" onclick="return confirm('Supprimer ce livre ?')">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="text-align:center; padding: 50px;">
+                La bibliothèque est vide. Brigitte, commencez par ajouter des auteurs et éditeurs !
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,107 @@
+
+:root {
+    --brun: #664229;
+    --beige: #E4D2B2;
+    --orange: #D79A64;
+    --fond: #f9f7f2;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--fond);
+}
+
+nav {
+    background-color: var(--brun);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav .logo {
+    color: var(--beige);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--orange);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    min-height: 60vh;
+}
+
+.btn_action {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn_action:hover {
+    background-color: var(--brun);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--brun);
+    font-size: 0.9rem;
+    margin-top: 50px;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--beige);
+    padding-bottom: 10px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.admin-table th {
+    background-color: var(--brun);
+    color: white;
+    text-align: left;
+    padding: 12px;
+}
+
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-edit { color: var(--orange); text-decoration: none; margin-right: 10px; font-weight: bold; }
+.btn-delete { color: #d9534f; text-decoration: none; font-weight: bold; }

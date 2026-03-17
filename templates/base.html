@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>BiblioDrive - Les Furtifs</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">📚 BiblioDrive</div>
+            <ul>
+                <li><a href="{% url 'list_books' %}">Catalogue</a></li>
+                <li><a href="{% url 'user_history' %}">Mes Emprunts</a></li>
+                {% if user.is_staff %}
+                    <li><a href="/admin_panel/" class="admin-link">Gestion Brigitte</a></li>
+                {% endif %}
+                <li>
+                    {% if user.is_authenticated %}
+                        <span class="user-badge">👤 {{ user.username }}</span>
+                    {% else %}
+                        <a href="/admin_panel/">Connexion</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block main_content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Bibliothèque "Les Furtifs" - Brest</p>
+    </footer>
+</body>
+</html>
