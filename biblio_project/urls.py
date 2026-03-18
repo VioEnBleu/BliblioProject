@@ -7,7 +7,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', RedirectView.as_view(url='catalogue/', permanent=True)),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('admin_panel/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('admin/books/add/', views_admin.create_livre_action, name='add_book'),
     path('admin/books/edit/<str:item_id>/', views_admin.edit_livre_action, name='edit_book'),
     path('admin/books/delete/<str:item_id>/', views_admin.delete_livre_action, name='del_book'),

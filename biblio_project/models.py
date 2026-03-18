@@ -1,64 +1,54 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class EditeurData(models.Model):
-    name_str = models.CharField(max_length=50)
-    societe_nom = models.CharField(max_length=255, blank=True, null=True)
-    adresse_loc = models.CharField(max_length=50, blank=True, null=True)
-    city_ville = models.CharField(max_length=20, blank=True, null=True)
-    state_prov = models.CharField(max_length=10, blank=True, null=True)
-    zip_code = models.CharField(max_length=15, blank=True, null=True)
-    tel_num = models.CharField(max_length=15, blank=True, null=True)
-    fax_num = models.CharField(max_length=15, blank=True, null=True)
-    infos_text = models.TextField(blank=True, null=True)
-
-class AuteurEntity(models.Model):
-    nom_author = models.CharField(max_length=50)
-    birth_annee = models.SmallIntegerField(blank=True, null=True)
-
-class LivreItem(models.Model):
-    isbn_id = models.CharField(max_length=20, primary_key=True)
-    title_nom = models.CharField(max_length=255)
-    pub_year = models.SmallIntegerField(blank=True, null=True)
-    desc_text = models.CharField(max_length=50, blank=True, null=True)
-    notes_str = models.CharField(max_length=50, blank=True, null=True)
-    sujet_topic = models.CharField(max_length=50, blank=True, null=True)
-    details_txt = models.TextField(blank=True, null=True)
-    editeur_link = models.ForeignKey(EditeurData, on_delete=models.CASCADE)
-    auteurs_rel = models.ManyToManyField(AuteurEntity)
-    is_dispo = models.BooleanField(default=True)
-
-class BookingResa(models.Model):
-    user_client = models.ForeignKey(User, on_delete=models.CASCADE)
-    book_cible = models.ForeignKey(LivreItem, on_delete=models.CASCADE)
-    date_creation = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
-    
-    from django.db import models
-
-class Authors(models.Model):
-    au_id = models.AutoField(primary_key=True)
-    author = models.CharField(max_length=255)
-    year_born = models.SmallIntegerField(null=True, blank=True)
+class Editeur(models.Model):
+    nom = models.CharField(max_length=255, verbose_name="Nom de l'éditeur")
+    societe = models.CharField(max_length=255, blank=True, null=True, verbose_name="Raison sociale")
+    adresse = models.CharField(max_length=255, blank=True, null=True, verbose_name="Adresse")
+    ville = models.CharField(max_length=100, blank=True, null=True, verbose_name="Ville")
+    code_postal = models.CharField(max_length=15, blank=True, null=True, verbose_name="Code Postal")
+    telephone = models.CharField(max_length=15, blank=True, null=True, verbose_name="Téléphone")
 
     def __str__(self):
-        return self.author
+        return self.nom
 
-class Publishers(models.Model):
-    pubid = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    company_name = models.CharField(max_length=255, null=True, blank=True)
+    class Meta:
+        verbose_name = "Éditeur"
+        verbose_name_plural = "Éditeurs"
 
-    def __str__(self):
-        return self.name
-
-class Titles(models.Model):
-    isbn = models.CharField(primary_key=True, max_length=20) 
-    title = models.CharField(max_length=255) 
-    year_published = models.SmallIntegerField() 
-    description = models.TextField(null=True, blank=True)
-    pub_id = models.ForeignKey(Publishers, on_delete=models.CASCADE) 
-    author_id = models.ForeignKey(Authors, on_delete=models.CASCADE)
+class Auteur(models.Model):
+    nom = models.CharField(max_length=255, verbose_name="Nom complet")
+    annee_naissance = models.SmallIntegerField(blank=True, null=True, verbose_name="Année de naissance")
 
     def __str__(self):
-        return self.title
+        return self.nom
+
+    class Meta:
+        verbose_name = "Auteur"
+        verbose_name_plural = "Auteurs"
+
+class Livre(models.Model):
+    isbn = models.CharField(max_length=20, primary_key=True, verbose_name="ISBN")
+    titre = models.CharField(max_length=255, verbose_name="Titre")
+    annee_publication = models.SmallIntegerField(verbose_name="Année de publication")
+    description = models.TextField(blank=True, null=True, verbose_name="Description")
+    editeur = models.ForeignKey(Editeur, on_delete=models.CASCADE, verbose_name="Éditeur")
+    auteurs = models.ManyToManyField(Auteur, verbose_name="Auteurs")
+    est_disponible = models.BooleanField(default=True, verbose_name="Disponible")
+
+    def __str__(self):
+        return self.titre
+
+    class Meta:
+        verbose_name = "Livre"
+        verbose_name_plural = "Livres"
+
+class Reservation(models.Model):
+    utilisateur = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Client")
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, verbose_name="Livre réservé")
+    date_reservation = models.DateTimeField(auto_now_add=True, verbose_name="Date")
+    est_active = models.BooleanField(default=True, verbose_name="Réservation active")
+
+    class Meta:
+        verbose_name = "Réservation"
+        verbose_name_plural = "Réservations"

@@ -14,13 +14,13 @@
                 <li><a href="{% url 'list_books' %}">Catalogue</a></li>
                 <li><a href="{% url 'user_history' %}">Mes Emprunts</a></li>
                 {% if user.is_staff %}
-                    <li><a href="/admin_panel/" class="admin-link">Gestion Brigitte</a></li>
+                    <li><a href="/admin/" class="admin-link">Gestion Brigitte</a></li>
                 {% endif %}
                 <li>
                     {% if user.is_authenticated %}
                         <span class="user-badge">👤 {{ user.username }}</span>
                     {% else %}
-                        <a href="/admin_panel/">Connexion</a>
+                        <a href="/admin/">Connexion</a>
                     {% endif %}
                 </li>
             </ul>

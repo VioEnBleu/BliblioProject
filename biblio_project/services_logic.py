@@ -1,8 +1,8 @@
 from django.utils import timezone
-from .models import BookingResa, LivreItem
+from .models import Reservation
 
 def process_return_book(resa_id):
-    resa_obj = BookingResa.objects.get(id=resa_id)
+    resa_obj = Reservation.objects.get(id=resa_id)
     if resa_obj.is_active:
         resa_obj.is_active = False
         resa_obj.save()

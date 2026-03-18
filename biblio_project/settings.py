@@ -44,7 +44,6 @@ TEMPLATES = [
     },
 ]
 
-# Changement ici : On utilise SQLite pour eviter l'erreur de connexion
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
