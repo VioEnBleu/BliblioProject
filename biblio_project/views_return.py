@@ -1,15 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .models import Reservation
-from .services_logic import process_return_book
-
+from django.contrib.auth.decorators import login_required
 
 @login_required
 def user_history_view(request):
-    user_data = Reservation.objects.filter(user_client=request.user).order_by('-date_creation')
-    return render(request, 'user/history.html', {'history_items': user_data})
+    user_data = Reservation.objects.filter(utilisateur=request.user).order_by('-date_reservation')
+    return render(request, 'user/history.html', {'reservations': user_data})
 
+@login_required
 def return_item_action(request, resa_id):
+    resa = get_object_or_404(Reservation, id=resa_id, utilisateur=request.user)
     if request.method == 'POST':
-        process_return_book(resa_id)
-    return redirect('user_history')
+        livre = resa.livre
+        livre.est_disponible = True
+        livre.save()
+        
+        resa.est_active = False
+        resa.save()
+        return redirect('user_history')
+    return render(request, 'user/confirm_return.html', {'resa': resa})

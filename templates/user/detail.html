@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block main_content %}
 <div class="detail_box">
-    <h1>{{ book.title_nom }}</h1>
-    <p><strong>Description:</strong> {{ book.details_txt }}</p>
-    <p><strong>Editeur:</strong> {{ book.editeur_link.name_str }}</p>
-    <p><strong>Sujet:</strong> {{ book.sujet_topic }}</p>
+    <h1>{{ book.titre }}</h1>
     
-    {% if book.is_dispo %}
-        <form action="{% url 'reserve_book' book.isbn_id %}" method="post">
+    <p><strong>Description:</strong> {{ book.description }}</p>
+    
+    <p><strong>Éditeur:</strong> {{ book.editeur.nom }}</p>
+    
+    <p><strong>Année de publication:</strong> {{ book.annee_publication }}</p>
+    
+    {% if book.est_disponible %}
+        <form action="{% url 'reserve_book' book.isbn %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn_action">Réserver (Max 5)</button>
         </form>
+    {% else %}
+        <p style="color: orange;">Ce livre est déjà réservé.</p>
     {% endif %}
 </div>
 {% endblock %}

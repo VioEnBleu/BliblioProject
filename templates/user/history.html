@@ -5,16 +5,19 @@
     <tr>
         <th>Livre</th>
         <th>Date</th>
-        <th>Status</th>
+        <th>Statut</th>
         <th>Action</th>
     </tr>
-    {% for res in history_items %}
+    {% for res in reservations %}
     <tr>
-        <td>{{ res.book_cible.title_nom }}</td>
-        <td>{{ res.date_creation|date:"d/m/Y" }}</td>
-        <td>{% if res.is_active %}En cours{% else %}Rendu{% endif %}</td>
+        <td>{{ res.livre.titre }}</td>
+        
+        <td>{{ res.date_reservation|date:"d/m/Y" }}</td>
+        
+        <td>{% if res.est_active %}En cours{% else %}Rendu{% endif %}</td>
+        
         <td>
-            {% if res.is_active %}
+            {% if res.est_active %}
             <form action="{% url 'return_book' res.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Rendre le livre</button>
