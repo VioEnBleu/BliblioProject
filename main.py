@@ -10,7 +10,6 @@ def start_system():
             "Django non trouvé. Verifiez l'activation du venv."
         ) from exc
     
-    # Force le lancement du serveur sur le port 8000
     execute_from_command_line([sys.argv[0], 'runserver', '127.0.0.1:8000'])
 
 if __name__ == '__main__':

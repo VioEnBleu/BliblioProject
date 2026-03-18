@@ -3,7 +3,6 @@ import os
 import sys
 
 def main():
-    # Remplace 'biblio_project' par le nom du dossier qui contient ton settings.py
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'biblio_project.settings')
     try:
         from django.core.management import execute_from_command_line
